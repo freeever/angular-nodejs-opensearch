@@ -1,0 +1,64 @@
+<section>
+  <form [formGroup]="myForm" novalidate  (ngSubmit)="search()" #myform="ngForm">
+    <div><b>Databases:</b></div>
+    <div *ngFor="let indexName of indexes; let i=index">
+      <label>
+        <input type="checkbox" [value]="indexName.value" (change)="onCheckboxChange($event)" />
+        {{indexName.name}}
+      </label>
+    </div>
+    <div *ngIf="indexCheckArray.errors?.['required'] && (indexCheckArray.dirty || indexCheckArray.touched || myform.submitted)" class="text-danger">
+      Please choose index(es)
+    </div>
+
+    <div class="form-group">
+      <label>
+        <input formControlName="terms" placeholder="please input search text..."  class="form-control">
+      </label>
+      <div *ngIf="terms.errors?.['required'] && (terms.dirty || terms.touched || myform.submitted)" class="text-danger">
+        Please enter search text
+      </div>
+    </div><br/>
+
+    <button class="btn btn-primary" type="submit">Search</button><br><br>
+  </form>
+
+  <table class="table table-striped table-dark">
+    <thead>
+      <tr>
+        <th scope="col">id</th>
+        <th scope="col">oriId</th>
+        <th scope="col">title</th>
+        <th scope="col">description</th>
+        <th scope="col">abandonedMineIdentifier</th>
+        <th scope="col">officialName</th>
+        <th scope="col">is new</th>
+        <th scope="col">is update</th>
+      </tr>
+    </thead>
+
+    <ng-container *ngIf="!!response; else nodata">
+      <tbody>
+        <ng-container *ngFor='let data of response'>
+          <tr *ngFor="let i of data">
+            <td scope="row">{{i.id}}</td>
+            <td>{{i.oriId}}</td>
+            <td>{{i.title}}</td>
+            <td>{{i.description.substring(0,50)}}</td>
+            <td>{{i.abandonedMineIdentifier}}</td>
+            <td>{{i.officialName}}</td>
+            <td>{{i.new}}</td>
+            <td>{{i.update}}</td>
+          </tr>
+        </ng-container>
+      </tbody>
+    </ng-container>
+    <ng-template #nodata>
+      <tbody>
+        <tr>
+          <td scope="row" colspan="8">No data found!</td>
+        </tr>
+      </tbody>
+    </ng-template>
+  </table>
+</section>
