@@ -37,14 +37,14 @@
       </tr>
     </thead>
 
-    <ng-container *ngIf="!!response; else nodata">
+    <ng-container *ngIf="response && response.length > 0; else nodata">
       <tbody>
         <ng-container *ngFor='let data of response'>
           <tr *ngFor="let i of data">
             <td scope="row">{{i.id}}</td>
             <td>{{i.oriId}}</td>
             <td>{{i.title}}</td>
-            <td>{{i.description.substring(0,50)}}</td>
+            <td>{{i.description.substring(0,200)}}</td>
             <td>{{i.abandonedMineIdentifier}}</td>
             <td>{{i.officialName}}</td>
             <td>{{i.new}}</td>
@@ -56,7 +56,7 @@
     <ng-template #nodata>
       <tbody>
         <tr>
-          <td scope="row" colspan="8">No data found!</td>
+          <td scope="row" colspan="8">No data!</td>
         </tr>
       </tbody>
     </ng-template>

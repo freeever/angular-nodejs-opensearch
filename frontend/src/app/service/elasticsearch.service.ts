@@ -11,7 +11,7 @@ export class ElasticsearchService {
   baseUrl: string;
 
   constructor(private http: HttpClient) {
-    this.baseUrl = 'http://localhost:5000/api';
+    this.baseUrl = `${environment.server_URL}/api`;
   }
 
   search(request: any): Observable<any>{
