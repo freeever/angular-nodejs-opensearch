@@ -6,6 +6,8 @@ app.use(bodyParser.json());
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(express.urlencoded({ extended: true }));
 
+writeENV();
+
 app.use(express.static(__dirname.replace(/\\/g, "/") + '/view/dist/frontend'))
 
 const cors = require('cors');
@@ -17,6 +19,20 @@ app.get("/", (req, res) => {
 });
 
 const routes = require("./app/route/geo.routes.js")(app);
+
+function writeENV() {
+  if (process.env.NODE_ENV) {
+      let content = "(function (window) {" +
+          "window.__env = window.__env || {};" +
+          "window.__env.SERVER_URL = '" + process.env.SERVER_URL + "';" +
+          "}(this));"
+      fs.writeFile(path.join(__dirname.replace(/\\/g, "/"), '/view/dist/front/assets/environments/env.js'), content, (err) => {
+          if (err) throw err;
+          console.log('SERVER_URL :', process.env.SERVER_URL)
+          console.log('Successfully saved env.js file.');
+      });
+  }
+}
 
 app.use(sendSpaFileIfUnmatched);
 
