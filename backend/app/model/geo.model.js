@@ -41,9 +41,9 @@ Geo.findAllByIndexName = (indexName, result) => {
 };
 
 Geo.findByText = (data, result) => {
-  
-  const terms = '*' + data.terms.replaceAll(' ', '* *') + '*';
-  console.log("Find documents of index " + data.indexNames + " by text '" + terms + "'");
+  let terms = data.terms.replace(/\s+/g, " ").trim();
+  terms = '*' + terms.replaceAll(' ', '* *') + '*';
+  console.log("Search documents of index " + data.indexNames + " by text '" + terms + "'");
   const query = {
     index: data.indexNames,
     body: {
