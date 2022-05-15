@@ -3,6 +3,8 @@ const cors = require("cors");
 const path = require('path');
 const fs = require('fs');
 
+const routes = require("./app/route/geo.routes.js")(app);
+
 const app = express();
 const bodyParser = require("body-parser");
 app.use(bodyParser.json());
@@ -18,8 +20,6 @@ app.use(cors())
 app.get("/", (req, res) => {
   res.json({ message: "Welcome to Geology Ontario Portal NodeJS API" });
 });
-
-const routes = require("./app/route/geo.routes.js")(app);
 
 function writeENV() {
 if (process.env.NODE_ENV) {

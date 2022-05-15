@@ -6,7 +6,8 @@ const { Client } = require('@opensearch-project/opensearch');
 var opensearchConfig = require('../config/opensearch.config');
 
 const client = new Client({
-  node: opensearchConfig.PROTOCOL + '://' + opensearchConfig.AUTH + '@' + opensearchConfig.HOST + ':' + opensearchConfig.PORT,
+  node: opensearchConfig.OPENSEARCH_PROTOCOL + '://' + opensearchConfig.AUTH
+      + '@' + opensearchConfig.OPENSEARCH_HOST + ':' + opensearchConfig.OPENSEARCH_PORT,
   // ssl: {
   //     ca: fs.readFileSync(ca_certs_path),
       // You can turn off certificate verification (rejectUnauthorized: false) if you're using self-signed certificates with a hostname mismatch.
