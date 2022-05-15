@@ -6,8 +6,8 @@ const { Client } = require('@opensearch-project/opensearch');
 var opensearchConfig = require('../config/opensearch.config');
 
 const client = new Client({
-  node: opensearchConfig.OPENSEARCH_PROTOCOL + '://' + opensearchConfig.AUTH
-      + '@' + opensearchConfig.OPENSEARCH_HOST + ':' + opensearchConfig.OPENSEARCH_PORT,
+  node: opensearchConfig.OPENSEARCH_PROTOCOL + '://' + opensearchConfig.OPENSEARCH_AUTH
+      + '@' + opensearchConfig.OPENSEARCH_HOST + ':' + opensearchConfig.OPENSEARCH_PORT
   // ssl: {
   //     ca: fs.readFileSync(ca_certs_path),
       // You can turn off certificate verification (rejectUnauthorized: false) if you're using self-signed certificates with a hostname mismatch.
@@ -44,7 +44,7 @@ Geo.findAllByIndexName = (indexName, result) => {
 Geo.findByText = (data, result) => {
   let terms = data.terms.replace(/\s+/g, " ").trim();
   terms = '*' + terms.replaceAll(' ', '* *') + '*';
-  console.log("Search documents of index " + data.indexNames + " by text '" + terms + "'");
+  console.log("Search documents of index " + data.indexNames + " by text '" + terms + "' on " + opensearchConfig.OPENSEARCH_HOST);
   const query = {
     index: data.indexNames,
     body: {
